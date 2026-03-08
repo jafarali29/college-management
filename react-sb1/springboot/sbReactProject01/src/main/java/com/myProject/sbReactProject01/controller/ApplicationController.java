@@ -2,6 +2,7 @@ package com.myProject.sbReactProject01.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myProject.sbReactProject01.model.AdminSignIn;
 import com.myProject.sbReactProject01.model.AdminSignUp;
+import com.myProject.sbReactProject01.model.DeletePerson;
 import com.myProject.sbReactProject01.model.Hno;
 import com.myProject.sbReactProject01.model.Results;
 import com.myProject.sbReactProject01.model.StudentSignIn;
@@ -51,10 +53,27 @@ public class ApplicationController {
 		return response;
 	}
 	
-	@PostMapping("/results")
+	@PostMapping("/getResults")
 	Results result(@RequestBody Hno hno) {
 		Results response=signs.result(hno.getHallTicket());
 		return response;
 	}
 	
+	@PostMapping("/deleteStudent")
+	String deleteStudent(@RequestBody DeletePerson student) {
+		String response=signs.studentDelete(student);
+		return response;
+	}
+	
+	@PostMapping("/viewStudent")
+	StudentSignUp viewStudent(@RequestBody DeletePerson person) {
+		StudentSignUp view=signs.studentView(person);
+		return view;
+	}
+	
+//	@PostMapping("/editStudent")
+//	StudentSignUp editStudent(@RequestBody DeletePerson person) {
+//		StudentSignUp edit=signs.studentEdit(person);
+//		return edit;
+//	}
 }

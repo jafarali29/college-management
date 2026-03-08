@@ -1,8 +1,10 @@
 package com.myProject.sbReactProject01.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.myProject.sbReactProject01.model.DeletePerson;
 import com.myProject.sbReactProject01.model.Results;
 import com.myProject.sbReactProject01.model.StudentSignIn;
 import com.myProject.sbReactProject01.model.StudentSignUp;
@@ -40,4 +42,19 @@ public class StudentService {
 		Results response=resRepo.findByHallTicket(hallTicket);
 		return response;
 	}
+	
+	public String studentDelete(DeletePerson person) {
+			long rows=repo.deleteByFullNameAndPhone(person.getFullName(),person.getPhone());
+			return rows>0?"success":"failure";
+	}
+	
+	public StudentSignUp studentView(DeletePerson person) {
+		StudentSignUp student=repo.getByFullNameAndPhone(person.getFullName(),person.getPhone());
+		return student;
+	}
+	
+//	public StudentSignUp studentEdit(DeletePerson person) {
+//		StudentSignUp student=repo.getByFullNameAndPhone(person.getFullName(),person.getPhone());
+//		return student;
+//	}
 }

@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./Mystyles.module.css";
 function AdminSignUp() {
-    const navigate=useNavigate();
+    //const navigate=useNavigate();
     const [message,setMessage]=useState("");
     const [loading,setLoading]=useState(false);
-    const res=useState("");
+    const [mess,setMess]=useState("");
+
     const [formData, setFormData] = useState({
         fullName: "",
         password: "",
@@ -87,7 +88,8 @@ function AdminSignUp() {
     };
 
     const addressHandler = (e) => {
-        const val = e.target.value.replace(/[^a-zA-Z0-9\s,.-/]/g, "");
+        // put hyphen at end (or escape) to avoid range in char class
+        const val = e.target.value.replace(/[^a-zA-Z0-9\s,./-]/g, "");
         setFormData((prev) => ({ ...prev, address: val }));
 
         setErrors((prev) => ({
@@ -116,20 +118,21 @@ function AdminSignUp() {
         }
 
         try{
-        const response=await axios.post("http://localhost:8181/api/v1/admRegister",formData);
+        const response=await axios.post("http://localhost:8181/api/v1/adminRegister",formData);
         if(response.data==="success"){
             console.log("data sent successfully");
-            navigate("/");
+            setMess("Admin registered successfully!");
+        //navigate("/addAdmin");
         }else{
             console.log("something went wrong!");
         }
-        }catch(error){
-            console.log("error:",error);
-            setMessage("There is an error,Please try again!",error);
-
-        }finally{
-            setLoading(false);
-        };
+        } catch (error) {
+            console.log("error:", error);
+            setMessage("There is an error. " + (error?.message || error));
+ 
+         }finally{
+             setLoading(false);
+         };
         
 
 
@@ -145,7 +148,7 @@ function AdminSignUp() {
 
                     <form onSubmit={submitHandler} className="m-3">
                         <div className={styles.centering}>
-                        <h3>SIGN UP</h3>
+                        <h3>ADMIN SIGN-UP</h3>
                         </div>
                         <div className="row">
                         <label className={styles.fontsizing}>Full Name:</label>
@@ -224,6 +227,7 @@ function AdminSignUp() {
                         <div className={styles.centering}>
                             <button type="submit" className="btn btn-success mt-2" disabled={loading}>{loading?"loading...":"submit"}</button>
                             {message && <p style={{color:"red"}}>{message}</p>}
+                            {mess && <p style={{color:"green"}}>{mess}</p>}
                         </div>
                     </form>
                 </div>

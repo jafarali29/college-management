@@ -118,7 +118,8 @@ function StudentSignUp() {
         const response=await axios.post("http://localhost:8181/api/v1/stuRegister",formData);
         if(response.data==="success"){
             console.log("data sent successfully");
-            navigate("/");
+            navigate("/addStudent");
+            setMessage("successfully added a student!");
         }else{
             console.log("something went wrong!");
         }
@@ -144,7 +145,7 @@ function StudentSignUp() {
 
                     <form onSubmit={submitHandler} className="m-3">
                         <div className={styles.centering}>
-                        <h3>SIGN UP</h3>
+                        <h3>STUDENT SIGN-UP</h3>
                         </div>
                         <div className="row">
                         <label className={styles.fontsizing}>Full Name:</label>
